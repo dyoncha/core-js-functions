@@ -104,28 +104,6 @@ function getPolynom(...args) {
     return result;
   };
 }
-// function getPolynom(...args) {
-//   if (args.length === 0) {
-//     return null;
-//   }
-//   let result = args.reverse().map((el, i) => {
-//     if (i === 0) {
-//       return (el > 0 ? '+' : '') + el;
-//     }
-
-//     const number = el > 1 ? `${el}*` : '';
-//     const degree = i > 1 ? `^${i}` : '';
-
-//     return `${(el > 0 ? '+' : '') + number}x${degree}`;
-//   });
-
-//   result = result.reverse().join(' ').replace(/\s/g, '');
-//   if (result[0] === '+' || result[0] === '-') result = result.substring(1);
-//   result = result.replace(/\+/g, ' + ');
-//   result = result.replace(/-/g, ' - ');
-
-//   return new Function('x', `return ${result}`);
-// }
 
 /**
  * Memoizes passed function and returns function
@@ -141,8 +119,16 @@ function getPolynom(...args) {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  let cachedResult;
+
+  return () => {
+    if (cachedResult) {
+      return cachedResult;
+    }
+    cachedResult = func();
+    return cachedResult;
+  };
 }
 
 /**
